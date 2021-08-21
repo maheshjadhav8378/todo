@@ -39,6 +39,24 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   }
 
   void onSubmit() {
+    if (selectedDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select date'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
+    if ((selectedDate as DateTime).isBefore(DateTime.now())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select future date'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
@@ -50,11 +68,35 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           selectedDate,
         );
       }
-      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Todo added successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      return;
     }
   }
 
   void onEdit() async {
+    if (selectedDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select date'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
+    if ((selectedDate as DateTime).isBefore(DateTime.now())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select future date'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       if (newTodo != null) {
@@ -64,7 +106,13 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           newTodo!.description,
           selectedDate,
         );
-        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Todo edited successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        return;
       }
     }
   }
@@ -107,6 +155,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                               newTodo?.title = value!;
                             },
                             initialValue: newTodo!.title,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Title is required!";
+                              }
+                              return null;
+                            },
                           ),
                           TextFormField(
                             decoration: InputDecoration(
@@ -116,6 +170,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                               newTodo?.description = value!;
                             },
                             initialValue: newTodo!.description,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Description is required!";
+                              }
+                              return null;
+                            },
                           ),
                           Row(
                             children: [
