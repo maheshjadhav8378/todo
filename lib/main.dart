@@ -5,6 +5,7 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'package:todo_app/providers/todo_list_provider.dart';
 import 'package:todo_app/screens/add_todo_screen.dart';
+import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/screens/todo_list_screen.dart';
 
 Future selectNotification(String? payload) async {
@@ -86,9 +87,9 @@ class _HomePageState extends State<HomePage> {
           primarySwatch: Colors.blue,
           accentColor: Colors.amber,
         ),
-        home: TodoListScreen(),
+        initialRoute: '/',
         routes: {
-          AddTodoScreen.routeName: (ctx) => AddTodoScreen(),
+          '/': (ctx) => HomeScreen(),
         },
       ),
     );

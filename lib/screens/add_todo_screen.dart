@@ -7,6 +7,10 @@ import 'package:todo_app/providers/todo_list_provider.dart';
 
 class AddTodoScreen extends StatefulWidget {
   static final routeName = '/add-todo';
+  final int? id;
+  Key? key;
+
+  AddTodoScreen({this.id, this.key});
 
   @override
   _AddTodoScreenState createState() => _AddTodoScreenState();
@@ -27,10 +31,10 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (isBorn) {
-      final id = ModalRoute.of(context)?.settings.arguments as int?;
-      if (id != null) {
-        final todo =
-            Provider.of<TodoListProvider>(context, listen: false).findById(id);
+      // final id = ModalRoute.of(context)?.settings.arguments as int?;
+      if (widget.id != null) {
+        final todo = Provider.of<TodoListProvider>(context, listen: false)
+            .findById(widget.id!);
         newTodo = todo;
         selectedDate = newTodo!.deadline;
       }
@@ -74,7 +78,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           backgroundColor: Colors.green,
         ),
       );
-      return;
+      // return;
+      Navigator.of(context).pushReplacementNamed('/');
     }
   }
 
@@ -112,7 +117,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             backgroundColor: Colors.green,
           ),
         );
-        return;
+        Navigator.of(context).pop();
       }
     }
   }
@@ -120,7 +125,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).accentColor,
       appBar: AppBar(
         title: Text(newTodo!.id == null ? 'Add Todo' : 'Edit Todo'),
       ),
