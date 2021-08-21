@@ -54,11 +54,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
         actions: [
           if (selectedTodos.length == 1 && category != Category.Completed)
             IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
+              onPressed: () async {
+                await Navigator.of(context).pushNamed(
                   AddTodoScreen.routeName,
                   arguments: selectedTodos.first,
                 );
+                setState(() {
+                  selectedTodos = {};
+                });
               },
               icon: Icon(
                 Icons.edit,
@@ -69,6 +72,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
               onPressed: () async {
                 await Provider.of<TodoListProvider>(context, listen: false)
                     .deleteTodos(selectedTodos);
+                setState(() {
+                  selectedTodos = {};
+                });
               },
               icon: Icon(Icons.delete),
               color: Colors.red,
@@ -78,6 +84,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
               onPressed: () async {
                 await Provider.of<TodoListProvider>(context, listen: false)
                     .completeTodos(selectedTodos);
+                setState(() {
+                  selectedTodos = {};
+                });
               },
               icon: Icon(
                 Icons.check_circle,
