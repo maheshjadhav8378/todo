@@ -65,6 +65,11 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           ),
                         ),
                       );
+                      if (category == Category.Overdue) {
+                        setState(() {
+                          selectedTodos = {};
+                        });
+                      }
                     } catch (e) {}
                     // setState(() {
                     //   selectedTodos = {};
