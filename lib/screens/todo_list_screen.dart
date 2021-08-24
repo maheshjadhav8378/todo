@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/todo_list_provider.dart';
 import 'package:todo_app/screens/add_todo_screen.dart';

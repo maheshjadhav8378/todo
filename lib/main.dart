@@ -7,48 +7,17 @@ import 'package:todo_app/providers/todo_list_provider.dart';
 import 'package:todo_app/screens/home_screen.dart';
 
 Future selectNotification(String? payload) async {
-  // if (payload != null) {
-  //   debugPrint('notification payload: $payload');
-  // }
-  // await Navigator.push(
-  //   context,
-  //   MaterialPageRoute<void>(builder: (context) => SecondScreen(payload)),
-  // );
+  // ...
 }
 
 Future onDidReceiveLocalNotification(
     int id, String? title, String? body, String? payload) async {
-  // display a dialog with the notification details, tap ok to go to another page
-  // showDialog(
-  //   context: context,
-  //   builder: (BuildContext context) => CupertinoAlertDialog(
-  //     title: Text(title),
-  //     content: Text(body),
-  //     actions: [
-  //       CupertinoDialogAction(
-  //         isDefaultAction: true,
-  //         child: Text('Ok'),
-  //         onPressed: () async {
-  //           Navigator.of(context, rootNavigator: true).pop();
-  //           await Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (context) => SecondScreen(payload),
-  //             ),
-  //           );
-  //         },
-  //       )
-  //     ],
-  //   ),
-  // );
+  // ....
 }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  tz.initializeTimeZones();
+Future<void> initializeLocalNotification() async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
   final IOSInitializationSettings initializationSettingsIOS =
@@ -62,20 +31,16 @@ Future<void> main() async {
       macOS: initializationSettingsMacOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: selectNotification);
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  await initializeLocalNotification();
   runApp(HomePage());
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TodoListProvider>(
